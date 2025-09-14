@@ -1,0 +1,168 @@
+<!-- filepath: d:\CicloV\Avanzado\DesAplWAv\semana04\mi-sitio-express\views\animes\create.ejs -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Anime - AnimeList</title>
+    <!-- Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .form-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 0;
+        }
+        .image-preview {
+            max-width: 200px;
+            max-height: 280px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-header">
+        <div class="container">
+            <h1 class="center-align">
+                <i class="material-icons large">add_circle</i>
+                Agregar Nuevo Anime
+            </h1>
+        </div>
+    </div>
+
+    <div class="container" style="margin-top: 30px;">
+        <div class="row">
+            <div class="col s12 m8 offset-m2 l6 offset-l3">
+                <div class="card">
+                    <div class="card-content">
+                        <form method="POST" action="/animes/store">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">movie</i>
+                                    <input id="titulo" name="titulo" type="text" class="validate" required>
+                                    <label for="titulo">Título del Anime</label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">image</i>
+                                    <input id="imagen" name="imagen" type="url" class="validate" 
+                                           placeholder="https://ejemplo.com/imagen.jpg"
+                                           onchange="previewImage(this.value)">
+                                    <label for="imagen">URL de la Imagen (Opcional)</label>
+                                    <span class="helper-text">Puedes usar enlaces de MyAnimeList, AniList, etc.</span>
+                                </div>
+                            </div>
+
+                            <!-- Vista previa de imagen -->
+                            <div class="row center-align" id="imagePreview" style="display: none;">
+                                <div class="col s12">
+                                    <img id="previewImg" class="image-preview responsive-img" alt="Vista previa">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">category</i>
+                                    <select name="genero" required>
+                                        <option value="" disabled selected>Selecciona un género</option>
+                                        <option value="Acción">Acción</option>
+                                        <option value="Aventura">Aventura</option>
+                                        <option value="Comedia">Comedia</option>
+                                        <option value="Drama">Drama</option>
+                                        <option value="Fantasy">Fantasy</option>
+                                        <option value="Romance">Romance</option>
+                                        <option value="Ciencia Ficción">Ciencia Ficción</option>
+                                        <option value="Sobrenatural">Sobrenatural</option>
+                                        <option value="Thriller">Thriller</option>
+                                        <option value="Slice of Life">Slice of Life</option>
+                                        <option value="Mecha">Mecha</option>
+                                        <option value="Deportes">Deportes</option>
+                                    </select>
+                                    <label>Género</label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s6">
+                                    <i class="material-icons prefix">play_circle_outline</i>
+                                    <input id="episodios" name="episodios" type="number" min="1" max="2000" class="validate" required>
+                                    <label for="episodios">Número de Episodios</label>
+                                </div>
+
+                                <div class="input-field col s6">
+                                    <i class="material-icons prefix">date_range</i>
+                                    <input id="año" name="año" type="number" min="1950" max="2030" class="validate" required>
+                                    <label for="año">Año de Estreno</label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">business</i>
+                                    <input id="estudio" name="estudio" type="text" class="validate" required>
+                                    <label for="estudio">Estudio de Animación</label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <i class="material-icons prefix">star</i>
+                                    <input id="calificacion" name="calificacion" type="number" min="0" max="10" step="0.1" class="validate" required>
+                                    <label for="calificacion">Calificación (0-10)</label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col s12 center-align">
+                                    <button type="submit" class="btn-large waves-effect waves-light purple">
+                                        <i class="material-icons left">save</i>Guardar Anime
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="center-align">
+                    <a href="/animes" class="btn waves-effect waves-light grey">
+                        <i class="material-icons left">arrow_back</i>Volver a la Lista
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Materialize JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar select
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems);
+        });
+
+        function previewImage(url) {
+            const preview = document.getElementById('imagePreview');
+            const img = document.getElementById('previewImg');
+            
+            if (url && url.trim() !== '') {
+                img.src = url;
+                img.onload = function() {
+                    preview.style.display = 'block';
+                };
+                img.onerror = function() {
+                    preview.style.display = 'none';
+                    M.toast({html: 'No se pudo cargar la imagen', classes: 'red'});
+                };
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
