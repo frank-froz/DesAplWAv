@@ -1,0 +1,98 @@
+{
+  "tickets": [
+    {
+      "id": "4108ce23-4cd9-46f2-8851-b14a6f09d4d4",
+      "title": "Ticket de prueba - Email",
+      "description": "Probando el envío automático de emails",
+      "status": "nuevo",
+      "priority": "high",
+      "assignedUser": null
+    },
+    {
+      "id": "5208ce23-4cd9-46f2-8851-b14a6f09d4d5",
+      "title": "Error en sistema de login",
+      "description": "Los usuarios no pueden iniciar sesión",
+      "status": "nuevo",
+      "priority": "high",
+      "assignedUser": null
+    },
+    {
+      "id": "6308ce23-4cd9-46f2-8851-b14a6f09d4d6",
+      "title": "Problema con base de datos",
+      "description": "Conexión lenta a la base de datos",
+      "status": "en_progreso",
+      "priority": "medium",
+      "assignedUser": "juan.perez@ejemplo.com"
+    },
+    {
+      "id": "7408ce23-4cd9-46f2-8851-b14a6f09d4d7",
+      "title": "Bug en interfaz de usuario",
+      "description": "Botón de envío no funciona en Chrome",
+      "status": "nuevo",
+      "priority": "low",
+      "assignedUser": null
+    },
+    {
+      "id": "8508ce23-4cd9-46f2-8851-b14a6f09d4d8",
+      "title": "Optimización de rendimiento",
+      "description": "El sistema está lento durante horas pico",
+      "status": "completado",
+      "priority": "high",
+      "assignedUser": "maria.garcia@ejemplo.com"
+    },
+    {
+      "id": "9608ce23-4cd9-46f2-8851-b14a6f09d4d9",
+      "title": "Actualización de seguridad",
+      "description": "Aplicar parches de seguridad críticos",
+      "status": "nuevo",
+      "priority": "high",
+      "assignedUser": null
+    },
+    {
+      "id": "1708ce23-4cd9-46f2-8851-b14a6f09d400",
+      "title": "Solicitud de nueva funcionalidad",
+      "description": "Agregar exportación a PDF",
+      "status": "en_progreso",
+      "priority": "medium",
+      "assignedUser": "ana.lopez@ejemplo.com"
+    },
+    {
+      "id": "1808ce23-4cd9-46f2-8851-b14a6f09d401",
+      "title": "Error 404 en página de contacto",
+      "description": "La página de contacto muestra error 404",
+      "status": "nuevo",
+      "priority": "medium",
+      "assignedUser": null
+    }
+  ],
+  "notifications": [
+    {
+      "id": "1379df0c-d6c7-45ed-86b8-b8736009787d",
+      "type": "email",
+      "message": "Nuevo ticket creado: Problema 1",
+      "status": "pending",
+      "ticketId": "e2cba12c-e7c0-4b7a-9ad2-4f0f2319e29f"
+    },
+    {
+      "id": "7b995574-6a80-496b-a0c0-7c4a1f260584",
+      "type": "email",
+      "message": "El ticket e2cba12c-e7c0-4b7a-9ad2-4f0f2319e29f fue asignado a Franklin",
+      "status": "pending",
+      "ticketId": "e2cba12c-e7c0-4b7a-9ad2-4f0f2319e29f"
+    },
+    {
+      "id": "b59dbfae-aa7c-44bf-b17b-7c819af974f8",
+      "type": "push",
+      "message": "El ticket e2cba12c-e7c0-4b7a-9ad2-4f0f2319e29f cambió a asignado",
+      "status": "pending",
+      "ticketId": "e2cba12c-e7c0-4b7a-9ad2-4f0f2319e29f"
+    },
+    {
+      "id": "bea82901-61ca-449b-b816-9f6f7ad0a9c8",
+      "type": "email",
+      "message": "Nuevo ticket creado: Ticket de prueba - Email",
+      "status": "pending",
+      "ticketId": "4108ce23-4cd9-46f2-8851-b14a6f09d4d4"
+    }
+  ]
+}
