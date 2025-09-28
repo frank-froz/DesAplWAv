@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Post - Social Media</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    .edit-form {
+      max-width: 600px;
+      margin: 0 auto;
+      margin-top: 30px;
+    }
+    .image-preview {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 10px 0;
+      display: none;
+    }
+    .hashtag-preview {
+      margin-top: 10px;
+    }
+    .current-info {
+      background-color: #f5f5f5;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body class="grey lighten-4">
+
+  <nav class="blue darken-2">
+    <div class="nav-wrapper container">
+      <a href="/" class="brand-logo">
+        <i class="material-icons"></i> SocialApp
+      </a>
+      <ul class="right">
+        <li><a href="/posts"><i class="material-icons left">arrow_back</i>Volver</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container edit-form">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">
+          <i class="material-icons left orange-text">edit</i>
+          Editar Post
+        </span>
+        
+        <div class="current-info">
+          <h6><i class="material-icons left">info</i>Información actual</h6>
+          <p><strong>Autor:</strong> <%= post.user ? (post.user.name + ' ' + post.user.lastName) : 'Usuario Anónimo' %></p>
+          <p><strong>Creado:</strong> <%= post.createdAt ? new Date(post.createdAt).toLocaleDateString('es-ES', {
+            year: 'numeric', month: 'long', day: 'numeric',
+            hour: '2-digit', minute: '2-digit'
+          }) : '' %></p>
+          <% if (post.updatedAt) { %>
+            <p><strong>Última actualización:</strong> <%= new Date(post.updatedAt).toLocaleDateString('es-ES', {
+              year: 'numeric', month: 'long', day: 'numeric',
+              hour: '2-digit', minute: '2-digit'
+            }) %></p>
+          <% } %>
+        </div>
+        
+        <% if (typeof error !== 'undefined') { %>
+          <div class="card-panel red lighten-4 red-text">
+            <i class="material-icons left">error</i><%= error %>
+          </div>
+        <% } %>
+
+        <form action="/posts/edit/<%= post._id %>" method="POST">
+          <div class="input-field">
+            <select name="userId" required>
+              <% users.forEach(user => { %>
+                <option value="<%= user._id %>" <%= post.user && post.user._id.toString() === user._id.toString() ? 'selected' : '' %>>
+                  <%= user.name %> <%= user.lastName %>
+                </option>
+              <% }); %>
+            </select>
+            <label>Autor del Post</label>
+          </div>
+
+          <div class="input-field">
+            <input name="title" type="text" maxlength="30" required 
+                   value="<%= (typeof formData !== 'undefined') ? formData.title || post.title : post.title %>">
+            <label for="title">Título del Post *</label>
+            <span class="helper-text" data-error="El título es requerido (mínimo 5, máximo 30 caracteres)">Máximo 30 caracteres</span>
+          </div>
+
+          <div class="input-field">
+            <textarea name="content" class="materialize-textarea" required><%= (typeof formData !== 'undefined') ? formData.content || post.content : post.content %></textarea>
+            <label for="content">¿Qué estás pensando? *</label>
+            <span class="helper-text" data-error="El contenido es requerido (mínimo 10 caracteres)">Comparte tus ideas...</span>
+          </div>
+
+          <div class="input-field">
+            <input name="imageUrl" type="url" id="imageUrl" 
+                   value="<%= (typeof formData !== 'undefined') ? formData.imageUrl || post.imageUrl || '' : post.imageUrl || '' %>"
+                   onchange="previewImage(this.value)">
+            <label for="imageUrl">URL de Imagen (opcional)</label>
+            <span class="helper-text">Agrega una imagen a tu post</span>
+          </div>
+          
+          <div id="imagePreview">
+            <img id="previewImg" class="image-preview responsive-img" alt="Vista previa">
+          </div>
+
+          <div class="input-field">
+            <input name="hashtag" type="text" id="hashtagInput" 
+                   value="<%= (typeof formData !== 'undefined') ? formData.hashtag || (post.hashtag ? post.hashtag.join(', ') : '') : (post.hashtag ? post.hashtag.join(', ') : '') %>"
+                   onkeyup="previewHashtags(this.value)">
+            <label for="hashtagInput">Hashtags (opcional)</label>
+            <span class="helper-text">Separa los hashtags con comas. Ej: tecnología, programación, nodejs</span>
+          </div>
+          
+          <div id="hashtagPreview" class="hashtag-preview"></div>
+
+          <div class="row" style="margin-top: 30px;">
+            <div class="col s12 right-align">
+              <a href="/posts" class="btn-flat waves-effect waves-teal">
+                <i class="material-icons left">cancel</i>Cancelar
+              </a>
+              <button type="submit" class="btn orange darken-2 waves-effect waves-light" style="margin-left: 10px;">
+                <i class="material-icons left">save</i>Guardar Cambios
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      M.AutoInit();
+      
+      var elems = document.querySelectorAll('select');
+      M.FormSelect.init(elems);
+      
+      M.textareaAutoResize(document.querySelectorAll('textarea'));
+      
+      M.updateTextFields();
+      
+      const imageUrl = document.getElementById('imageUrl').value;
+      if (imageUrl) previewImage(imageUrl);
+      
+      const hashtags = document.getElementById('hashtagInput').value;
+      if (hashtags) previewHashtags(hashtags);
+    });
+
+    function previewImage(url) {
+      const preview = document.getElementById('previewImg');
+      const container = document.getElementById('imagePreview');
+      
+      if (url && url.trim()) {
+        preview.src = url;
+        preview.style.display = 'block';
+        container.style.display = 'block';
+        
+        preview.onerror = function() {
+          container.style.display = 'none';
+          M.toast({html: 'Error al cargar la imagen', classes: 'red'});
+        };
+      } else {
+        container.style.display = 'none';
+      }
+    }
+
+    function previewHashtags(hashtags) {
+      const preview = document.getElementById('hashtagPreview');
+      
+      if (hashtags && hashtags.trim()) {
+        const tagArray = hashtags.split(',').map(tag => tag.trim()).filter(tag => tag);
+        const chipHTML = tagArray.map(tag => 
+          `<span class="chip orange lighten-4 orange-text">#${tag}</span>`
+        ).join(' ');
+        
+        preview.innerHTML = chipHTML;
+        preview.style.display = 'block';
+      } else {
+        preview.innerHTML = '';
+        preview.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>

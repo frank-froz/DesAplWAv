@@ -3,6 +3,7 @@ import { fileURLToPath } from "url";
 import path from "path";
 import connectDB from "./src/db/database.js";
 import dotenv from "dotenv";
+import User from "./src/models/User.js";
 dotenv.config(); // carga las variables desde .env
 
 //rutas
