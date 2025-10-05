@@ -1,0 +1,180 @@
+
+<div class="row">
+  <div class="col s12">
+    <!-- Header del admin -->
+    <div class="card red darken-2 white-text">
+      <div class="card-content">
+        <div class="row valign-wrapper">
+          <div class="col s2">
+            <i class="material-icons large">admin_panel_settings</i>
+          </div>
+          <div class="col s10">
+            <h4 class="no-margin">Panel de Administración</h4>
+            <p class="no-margin">Gestión de usuarios del sistema</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <!-- Estadísticas rápidas -->
+  <div class="col s12 m4">
+    <div class="card-panel blue darken-1 white-text center-align">
+      <i class="material-icons large">people</i>
+      <h5 class="total-users">0</h5>
+      <p>Total Usuarios</p>
+    </div>
+  </div>
+  
+  <div class="col s12 m4">
+    <div class="card-panel green darken-1 white-text center-align">
+      <i class="material-icons large">admin_panel_settings</i>
+      <h5 class="admin-users">0</h5>
+      <p>Administradores</p>
+    </div>
+  </div>
+  
+  <div class="col s12 m4">
+    <div class="card-panel orange darken-1 white-text center-align">
+      <i class="material-icons large">person</i>
+      <h5 class="regular-users">0</h5>
+      <p>Usuarios Regulares</p>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col s12">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">
+          <i class="material-icons left">list</i>Lista de Usuarios
+        </span>
+        
+        <!-- Filtros y búsqueda -->
+        <div class="row">
+          <div class="input-field col s12 m6">
+            <i class="material-icons prefix">search</i>
+            <input type="text" id="searchUsers" placeholder="Buscar por nombre o email...">
+            <label for="searchUsers">Buscar Usuario</label>
+          </div>
+          <div class="input-field col s12 m6">
+            <select id="filterRole">
+              <option value="">Todos los roles</option>
+              <option value="admin">Administradores</option>
+              <option value="user">Usuarios</option>
+            </select>
+            <label>Filtrar por Rol</label>
+          </div>
+        </div>
+
+        <!-- Tabla responsive -->
+        <div class="responsive-table-container">
+          <table class="striped responsive-table highlight">
+            <thead>
+              <tr>
+                <th>Avatar</th>
+                <th>Nombre Completo</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Edad</th>
+                <th>Roles</th>
+                <th>Fecha Registro</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody">
+              <tr>
+                <td colspan="8" class="center-align grey-text">
+                  <i class="material-icons large">hourglass_empty</i>
+                  <br>Cargando usuarios...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Acciones de administrador -->
+<div class="row">
+  <div class="col s12">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">
+          <i class="material-icons left">settings</i>Acciones de Administrador
+        </span>
+        <div class="row">
+          <div class="col s12 m6 l3">
+            <a href="/dashboard-user" class="btn-large waves-effect waves-light blue full-width">
+              <i class="material-icons left">dashboard</i>Vista Usuario
+            </a>
+          </div>
+          <div class="col s12 m6 l3">
+            <a href="/profile" class="btn-large waves-effect waves-light green full-width">
+              <i class="material-icons left">person</i>Mi Perfil
+            </a>
+          </div>
+          <div class="col s12 m6 l3">
+            <a href="#refreshBtn" class="btn-large waves-effect waves-light orange full-width" onclick="location.reload()">
+              <i class="material-icons left">refresh</i>Actualizar
+            </a>
+          </div>
+          <div class="col s12 m6 l3">
+            <a href="#" class="btn-large waves-effect waves-light red full-width" id="logoutBtn">
+              <i class="material-icons left">logout</i>Cerrar Sesión
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Los modales se generarán dinámicamente con JavaScript -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Inicializar tooltips y modales
+  M.Tooltip.init(document.querySelectorAll('.tooltipped'));
+  M.Modal.init(document.querySelectorAll('.modal'));
+  M.FormSelect.init(document.querySelectorAll('select'));
+
+  // Funcionalidad de búsqueda
+  const searchInput = document.getElementById('searchUsers');
+  const roleFilter = document.getElementById('filterRole');
+  const tableBody = document.getElementById('usersTableBody');
+  const allRows = Array.from(tableBody.querySelectorAll('tr'));
+
+  function filterUsers() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const selectedRole = roleFilter.value;
+
+    allRows.forEach(row => {
+      const name = row.dataset.name.toLowerCase();
+      const email = row.dataset.email.toLowerCase();
+      const roles = row.dataset.roles.toLowerCase();
+      
+      const matchesSearch = name.includes(searchTerm) || email.includes(searchTerm);
+      const matchesRole = !selectedRole || roles.includes(selectedRole);
+      
+      row.style.display = matchesSearch && matchesRole ? '' : 'none';
+    });
+  }
+
+  searchInput.addEventListener('input', filterUsers);
+  roleFilter.addEventListener('change', filterUsers);
+});
+</script>
+
+<style>
+.full-width { width: 100% !important; }
+.no-margin { margin: 0 !important; }
+.responsive-table-container { overflow-x: auto; }</style>
+
+<script src="/js/admin-dashboard.js"></script>
+</style>

@@ -14,12 +14,27 @@ class UserRepository {
         return User.findById(id).populate('roles').exec();
     }
 
+    async updateById(id, updateData) {
+        return User.findByIdAndUpdate(
+            id, 
+            updateData, 
+            { 
+                new: true, // Devolver el documento actualizado
+                runValidators: true // Ejecutar validaciones del esquema
+            }
+        ).populate('roles').exec();
+    }
+
     async updatePassword(id, hashedPassword) {
         return User.findByIdAndUpdate(id, { password: hashedPassword }, { new: true }).exec();
     }
 
     async getAll() {
         return User.find().populate('roles').exec();
+    }
+
+    async deleteById(id) {
+        return User.findByIdAndDelete(id).exec();
     }
 }
 

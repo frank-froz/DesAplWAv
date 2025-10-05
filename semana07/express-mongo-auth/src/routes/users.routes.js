@@ -11,4 +11,10 @@ router.get('/', authenticate, authorize(['admin']), UserController.getAll);
 // GET /api/users/me (cualquier usuario autenticado)
 router.get('/me', authenticate, authorize([]), UserController.getMe);
 
+// PUT /api/users/me (cualquier usuario autenticado puede editar su perfil)
+router.put('/me', authenticate, authorize([]), UserController.updateMe);
+
+// GET /api/users/:id (solo admin puede ver detalles de otros usuarios)
+router.get('/:id', authenticate, authorize(['admin']), UserController.getById);
+
 export default router;

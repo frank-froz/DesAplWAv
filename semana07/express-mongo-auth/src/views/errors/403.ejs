@@ -1,0 +1,80 @@
+<div class="row">
+  <div class="col s12 m8 offset-m2 l6 offset-l3">
+    <div class="card hoverable">
+      <div class="card-content center-align">
+        <!-- Icono de error -->
+        <i class="material-icons" style="font-size: 120px; color: #f44336;">block</i>
+        
+        <!-- Código de error -->
+        <h1 class="red-text text-darken-2" style="font-size: 4rem; margin: 20px 0;">403</h1>
+        
+        <!-- Título -->
+        <h4 class="grey-text text-darken-2">Acceso Denegado</h4>
+        
+        <!-- Descripción -->
+        <p class="grey-text">
+          No tienes los permisos necesarios para acceder a esta página.
+          <br>
+          Por favor, verifica tus credenciales o contacta al administrador.
+        </p>
+        
+        <!-- Información adicional -->
+        <div class="card-panel red lighten-4">
+          <p class="red-text text-darken-2">
+            <i class="material-icons left">info</i>
+            <strong>¿Qué puedes hacer?</strong>
+          </p>
+          <div class="left-align">
+            <ul class="collection">
+              <li class="collection-item">
+                <i class="material-icons left red-text">chevron_right</i>
+                Verifica que hayas iniciado sesión correctamente
+              </li>
+              <li class="collection-item">
+                <i class="material-icons left red-text">chevron_right</i>
+                Asegúrate de tener el rol necesario para esta sección
+              </li>
+              <li class="collection-item">
+                <i class="material-icons left red-text">chevron_right</i>
+                Contacta al administrador si crees que es un error
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- Botones de acción -->
+        <div class="row" style="margin-top: 30px;">
+          <div class="col s12 m6">
+            <a href="/" class="btn-large waves-effect waves-light blue darken-3 full-width">
+              <i class="material-icons left">home</i>Ir al Inicio
+            </a>
+          </div>
+          <div class="col s12 m6">
+            <a href="javascript:history.back()" class="btn-large waves-effect waves-light grey full-width">
+              <i class="material-icons left">arrow_back</i>Volver Atrás
+            </a>
+          </div>
+        </div>
+        
+        <!-- Enlaces adicionales -->
+        <div style="margin-top: 20px;">
+          <a href="/signIn" class="blue-text text-darken-3">
+            <i class="material-icons left">login</i>Iniciar Sesión
+          </a>
+          <span class="grey-text"> | </span>
+          <a href="/signUp" class="blue-text text-darken-3">
+            <i class="material-icons left">person_add</i>Crear Cuenta
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.full-width { width: 100% !important; }
+.collection .collection-item {
+  border: none !important;
+  padding: 10px 0 !important;
+}
+</style>

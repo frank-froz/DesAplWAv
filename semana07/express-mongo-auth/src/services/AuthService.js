@@ -5,17 +5,13 @@ import roleRepository from '../repositories/RoleRepository.js';
 
 class AuthService {
 
-    async signUp({ email, password, name, roles = ['user'] }) {
+    async signUp({ email, password, name, lastName, phoneNumber, birthdate, address, url_profile, roles = ['user'] }) {
         const existing = await userRepository.findByEmail(email);
         if (existing) {
             const err = new Error('El email ya se encuentra en uso');
             err.status = 400;
             throw err;
         }
-
-        //lógica par encriptar el password
-        const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS ?? '10', 10);
-        const hashed = await bcrypt.hash(password, saltRounds);
 
         // Asignar los role ids
         const roleDocs = [];
@@ -25,13 +21,30 @@ class AuthService {
             roleDocs.push(roleDoc._id);
         }
 
-        const user = await userRepository.create({ email, password: hashed, name, roles: roleDocs });
+        // Crear usuario (la contraseña se hasheará automáticamente por el pre-save hook)
+        const userData = {
+            email,
+            password, // Se hashea en el modelo
+            name,
+            lastName,
+            phoneNumber,
+            birthdate: new Date(birthdate),
+            address: address || '',
+            url_profile: url_profile || '',
+            roles: roleDocs
+        };
+
+        const user = await userRepository.create(userData);
 
         return {
+            message: 'Usuario registrado exitosamente',
+            user: {
                 id: user._id,
                 email: user.email,
-                name: user.name
-            };
+                name: user.name,
+                lastName: user.lastName
+            }
+        };
     }
 
     async signIn({ email, password }) {
@@ -50,14 +63,15 @@ class AuthService {
         }
 
         const token = jwt.sign({ 
-            sub: user._id, 
-            roles: user.roles.map(r => r.name) }, 
-            process.env.JWT_SECRET, 
-            { 
-                expiresIn: process.env.JWT_EXPIRES_IN || '1h' 
-            }
-        );
-        // console.log("Verify:", jwt.verify(token, process.env.JWT_SECRET));
+            sub: user._id,
+            name: user.name,
+            email: user.email,
+            roles: user.roles.map(r => r.name) 
+        }, 
+        process.env.JWT_SECRET, 
+        { 
+            expiresIn: process.env.JWT_EXPIRES_IN || '1h' 
+        });
 
         return { token };
     }

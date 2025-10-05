@@ -1,0 +1,192 @@
+<div class="row">
+  <div class="col s12">
+    <!-- Header del perfil -->
+    <div class="card blue darken-1 white-text">
+      <div class="card-content">
+        <div class="row valign-wrapper">
+          <div class="col s12 m3 center-align">
+            <img src="https://via.placeholder.com/150" 
+                 alt="Foto de perfil" class="circle responsive-img user-profile-avatar" style="max-width: 120px;">
+          </div>
+          <div class="col s12 m9">
+            <h4 class="no-margin user-profile-name">Cargando...</h4>
+            <p class="no-margin user-profile-email">Cargando...</p>
+            <p class="no-margin user-profile-roles">
+              <span class="chip white blue-text">user</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <!-- Información personal -->
+  <div class="col s12 m6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">
+          <i class="material-icons left">person</i>Información Personal
+        </span>
+        <div class="collection">
+          <div class="collection-item">
+            <strong>Nombre completo:</strong><br>
+            <span class="user-full-name">Cargando...</span>
+          </div>
+          <div class="collection-item">
+            <strong>Fecha de nacimiento:</strong><br>
+            <span class="user-birthdate">Cargando...</span>
+          </div>
+          <div class="collection-item">
+            <strong>Teléfono:</strong><br>
+            <span class="user-phone">Cargando...</span>
+          </div>
+          <div class="collection-item">
+            <strong>Dirección:</strong><br>
+            <span class="user-address">Cargando...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Información de cuenta -->
+  <div class="col s12 m6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">
+          <i class="material-icons left">account_circle</i>Información de Cuenta
+        </span>
+        <div class="collection">
+          <div class="collection-item">
+            <strong>Correo electrónico:</strong><br>
+            <span class="user-email">Cargando...</span>
+          </div>
+          <div class="collection-item">
+            <strong>Roles asignados:</strong><br>
+            <span class="user-profile-roles">
+              <span class="chip grey white-text">
+                <i class="material-icons left">hourglass_empty</i>
+                Cargando...
+              </span>
+            </span>
+          </div>
+          <div class="collection-item">
+            <strong>Fecha de registro:</strong><br>
+            <span class="user-registration-date">Cargando...</span>
+          </div>
+          <div class="collection-item">
+            <strong>Última actualización:</strong><br>
+            <span class="user-last-update">Cargando...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Acciones -->
+<div class="row">
+  <div class="col s12">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">
+          <i class="material-icons left">settings</i>Acciones
+        </span>
+        <div class="row">
+          <div class="col s12 m6 l3">
+            <a href="#editProfileModal" class="btn-large waves-effect waves-light blue modal-trigger full-width">
+              <i class="material-icons left">edit</i>Editar Perfil
+            </a>
+          </div>
+          <div class="col s12 m6 l3">
+            <a href="#changePasswordModal" class="btn-large waves-effect waves-light orange modal-trigger full-width">
+              <i class="material-icons left">lock</i>Cambiar Contraseña
+            </a>
+          </div>
+          <div class="col s12 m6 l3">
+            <a href="/dashboard-admin" class="btn-large waves-effect waves-light red darken-2 full-width admin-button" style="display: none;">
+              <i class="material-icons left">admin_panel_settings</i>Panel Admin
+            </a>
+            <a href="/dashboard-user" class="btn-large waves-effect waves-light green full-width">
+              <i class="material-icons left">dashboard</i>Dashboard
+            </a>
+          </div>
+          <div class="col s12 m6 l3">
+            <a href="/" class="btn-large waves-effect waves-light grey full-width">
+              <i class="material-icons left">home</i>Inicio
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para editar perfil -->
+<div id="editProfileModal" class="modal modal-fixed-footer">
+  <div class="modal-content">
+    <h4>Editar Perfil</h4>
+    <form id="editProfileForm">
+      <div class="row">
+        <div class="input-field col s12 m6">
+          <i class="material-icons prefix">person</i>
+          <input id="edit_name" name="name" type="text" value="" required>
+          <label for="edit_name">Nombre</label>
+        </div>
+        <div class="input-field col s12 m6">
+          <input id="edit_lastName" name="lastName" type="text" value="" required>
+          <label for="edit_lastName">Apellido</label>
+        </div>
+        <div class="input-field col s12 m6">
+          <i class="material-icons prefix">phone</i>
+          <input id="edit_phoneNumber" name="phoneNumber" type="tel" value="" required>
+          <label for="edit_phoneNumber">Teléfono</label>
+        </div>
+        <div class="input-field col s12 m6">
+          <i class="material-icons prefix">location_on</i>
+          <input id="edit_address" name="address" type="text" value="">
+          <label for="edit_address">Dirección</label>
+        </div>
+        <div class="input-field col s12">
+          <i class="material-icons prefix">image</i>
+          <input id="edit_url_profile" name="url_profile" type="url" value="">
+          <label for="edit_url_profile">URL Foto de Perfil</label>
+          <span class="helper-text">Ingresa la URL de tu imagen de perfil</span>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-red btn-flat">Cancelar</a>
+    <button form="editProfileForm" type="submit" class="waves-effect waves-green btn blue darken-3">
+      <i class="material-icons left">save</i>Guardar Cambios
+    </button>
+  </div>
+</div>
+
+<!-- Modal para cambiar contraseña -->
+<div id="changePasswordModal" class="modal">
+  <div class="modal-content">
+    <h4>Cambiar Contraseña</h4>
+    <p>Esta funcionalidad estará disponible en una próxima actualización.</p>
+    <p>Por ahora, contacta al administrador del sistema si necesitas cambiar tu contraseña.</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Entendido</a>
+  </div>
+</div>
+
+<style>
+.full-width { width: 100% !important; }
+.no-margin { margin: 0 !important; }
+.collection .collection-item {
+  padding: 15px !important;
+}
+.collection .collection-item strong {
+  color: #1565c0;
+}</style>
+
+<script src="/js/user-profile.js"></script>
+</style>

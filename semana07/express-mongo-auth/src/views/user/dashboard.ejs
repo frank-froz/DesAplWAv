@@ -1,0 +1,171 @@
+<div class="row">
+  <div class="col s12">
+    <!-- Header de bienvenida -->
+    <div class="card blue darken-3 white-text">
+      <div class="card-content">
+        <div class="row valign-wrapper">
+          <div class="col s2">
+            <img src="https://via.placeholder.com/100" 
+                 alt="Avatar" class="circle responsive-img user-avatar" style="max-width: 80px;">
+          </div>
+          <div class="col s10">
+            <h4 class="no-margin">¡Bienvenido, <span class="user-name">Cargando...</span>! 👋</h4>
+            <p class="no-margin">Dashboard de Usuario</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <!-- Información rápida -->
+  <div class="col s12 m6 l3">
+    <div class="card-panel teal lighten-2 white-text center-align">
+      <i class="material-icons large">email</i>
+      <h6>Email</h6>
+      <p class="user-email">Cargando...</p>
+    </div>
+  </div>
+  
+  <div class="col s12 m6 l3">
+    <div class="card-panel orange lighten-2 white-text center-align">
+      <i class="material-icons large">phone</i>
+      <h6>Teléfono</h6>
+      <p class="user-phone">Cargando...</p>
+    </div>
+  </div>
+  
+  <div class="col s12 m6 l3">
+    <div class="card-panel green lighten-2 white-text center-align">
+      <i class="material-icons large">cake</i>
+      <h6>Edad</h6>
+      <p class="user-age">0 años</p>
+    </div>
+  </div>
+  
+  <div class="col s12 m6 l3">
+    <div class="card-panel purple lighten-2 white-text center-align">
+      <i class="material-icons large">location_on</i>
+      <h6>Dirección</h6>
+      <p class="user-address">No especificada</p>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <!-- Acciones principales -->
+  <div class="col s12">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">
+          <i class="material-icons left">dashboard</i>Panel de Control
+        </span>
+        <p>Desde aquí puedes gestionar tu cuenta y acceder a tus funciones principales.</p>
+        
+        <div class="row" style="margin-top: 30px;">
+          <div class="col s12 m6 l4">
+            <a href="/profile" class="btn-large waves-effect waves-light blue darken-3 full-width">
+              <i class="material-icons left">person</i>Ver Perfil Completo
+            </a>
+          </div>
+          <div class="col s12 m6 l4">
+            <a href="#editModal" class="btn-large waves-effect waves-light green modal-trigger full-width">
+              <i class="material-icons left">edit</i>Editar Datos
+            </a>
+          </div>
+          <div class="col s12 m6 l4">
+            <a href="#" class="btn-large waves-effect waves-light red full-width" id="logoutBtn">
+              <i class="material-icons left">logout</i>Cerrar Sesión
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Información adicional -->
+<div class="row">
+  <div class="col s12 m6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">
+          <i class="material-icons left">info</i>Información de Cuenta
+        </span>
+        <p><strong>Nombre completo:</strong> <span class="user-full-name">Cargando...</span></p>
+        <p><strong>Fecha de registro:</strong> <span class="user-registration-date">Cargando...</span></p>
+        <p><strong>Roles:</strong> <span class="user-roles">Cargando...</span></p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col s12 m6">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">
+          <i class="material-icons left">security</i>Seguridad
+        </span>
+        <p>Tu cuenta está protegida con autenticación JWT.</p>
+        <p><strong>Última actualización:</strong> <span class="user-last-update">Cargando...</span></p>
+        <br>
+        <a href="#changePasswordModal" class="btn waves-effect waves-light orange modal-trigger">
+          <i class="material-icons left">lock</i>Cambiar Contraseña
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para editar datos -->
+<div id="editModal" class="modal">
+  <div class="modal-content">
+    <h4>Editar Información Personal</h4>
+    <form id="editProfileForm">
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="edit_name" name="name" type="text" value="" required>
+          <label for="edit_name">Nombre</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="edit_lastName" name="lastName" type="text" value="" required>
+          <label for="edit_lastName">Apellido</label>
+        </div>
+        <div class="input-field col s12">
+          <input id="edit_phoneNumber" name="phoneNumber" type="tel" value="" required>
+          <label for="edit_phoneNumber">Teléfono</label>
+        </div>
+        <div class="input-field col s12">
+          <input id="edit_address" name="address" type="text" value="">
+          <label for="edit_address">Dirección</label>
+        </div>
+        <div class="input-field col s12">
+          <input id="edit_url_profile" name="url_profile" type="url" value="">
+          <label for="edit_url_profile">URL Foto de Perfil</label>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+    <button form="editProfileForm" type="submit" class="waves-effect waves-green btn blue darken-3">Guardar</button>
+  </div>
+</div>
+
+<!-- Modal para cambiar contraseña -->
+<div id="changePasswordModal" class="modal">
+  <div class="modal-content">
+    <h4>Cambiar Contraseña</h4>
+    <p>Esta funcionalidad estará disponible próximamente.</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+  </div>
+</div>
+
+<style>
+.full-width { width: 100% !important; }
+.no-margin { margin: 0 !important; }
+</style>
+
+<script src="/js/user-dashboard.js"></script>
