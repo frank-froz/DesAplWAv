@@ -55,7 +55,7 @@ app.use((req, res) => res.status(404).render("errors/404", { title: "No encontra
 // ===== Conexión MongoDB + arranque =====
 const PORT = process.env.PORT || 3000;
 
-mongoose.connect(process.env.MONGODB_URI, { autoIndex: true })
+mongoose.connect(process.env.MONGO_URI, { autoIndex: true })
   .then(async () => {
     console.log('Mongo connected');
     await seedRoles();
