@@ -20,22 +20,70 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Spinner } from "@/components/ui/spinner"
+import { Calendar } from "@/components/ui/calendar"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { CalendarIcon } from "lucide-react"
 
-export function ProjectForm() {
+interface NewProject {
+  title: string
+  description: string
+  category: string
+  priority: string
+  date?: Date
+  members: string[]
+}
+
+export function ProjectForm({ onAddProject }: { onAddProject: (data: NewProject) => void }) {
   const [open, setOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
   const [formData, setFormData] = useState({
-    name: "",
+    title: "",
     description: "",
     category: "",
     priority: "",
+    date: undefined as Date | undefined,
+    members: "",
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
+    // Validación
+    if (!formData.title.trim()) {
+      setErrorMessage("El nombre del proyecto es obligatorio.")
+      return
+    }
+    if (!formData.category) {
+      setErrorMessage("Debes seleccionar una categoría.")
+      return
+    }
+    if (!formData.priority) {
+      setErrorMessage("Debes seleccionar una prioridad.")
+      return
+    }
+    
+    setErrorMessage("")
+    setIsLoading(true)
+    
+    // Simular petición al backend
+    await new Promise(resolve => setTimeout(resolve, 2000))
+    
+    const data = {
+      ...formData,
+      members: formData.members.split(',').map(m => m.trim()).filter(m => m),
+    }
+    onAddProject(data)
     
     // Limpiar y cerrar
-    setFormData({ name: "", description: "", category: "", priority: "" })
+    setFormData({ title: "", description: "", category: "", priority: "", date: undefined, members: "" })
+    setIsLoading(false)
     setOpen(false)
   }
 
@@ -60,23 +108,28 @@ export function ProjectForm() {
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[525px]">
+        <DialogHeader>
+          <DialogTitle>Crear Nuevo Proyecto</DialogTitle>
+          <DialogDescription>
+            Completa la información del proyecto. Click en guardar cuando termines.
+          </DialogDescription>
+        </DialogHeader>
         <form onSubmit={handleSubmit}>
-          <DialogHeader>
-            <DialogTitle>Crear Nuevo Proyecto</DialogTitle>
-            <DialogDescription>
-              Completa la información del proyecto. Click en guardar cuando termines.
-            </DialogDescription>
-          </DialogHeader>
+          {errorMessage && (
+            <Alert variant="destructive">
+              <AlertDescription>{errorMessage}</AlertDescription>
+            </Alert>
+          )}
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
-              <Label htmlFor="name">
+              <Label htmlFor="title">
                 Nombre del Proyecto <span className="text-red-500">*</span>
               </Label>
               <Input
-                id="name"
+                id="title"
                 placeholder="Mi Proyecto Increíble"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                value={formData.title}
+                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
               />
             </div>
 
@@ -130,14 +183,56 @@ export function ProjectForm() {
                 </SelectContent>
               </Select>
             </div>
+
+            <div className="grid gap-2">
+              <Label>Fecha de Inicio</Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className={`w-full justify-start text-left font-normal ${
+                      !formData.date && "text-muted-foreground"
+                    }`}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {formData.date ? formData.date.toLocaleDateString() : "Selecciona una fecha"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={formData.date}
+                    onSelect={(date) => setFormData({ ...formData, date })}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+            <div className="grid gap-2">
+              <Label>Miembros del Equipo</Label>
+              <Input
+                placeholder="María García, Juan Pérez (separados por coma)"
+                value={formData.members}
+                onChange={(e) => setFormData({ ...formData, members: e.target.value })}
+              />
+            </div>
           </div>
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => setOpen(false)}>
-              Cancelar
-            </Button>
-            <Button type="submit">Crear Proyecto</Button>
-          </DialogFooter>
         </form>
+        <DialogFooter>
+          <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+            Cancelar
+          </Button>
+          <Button type="submit" disabled={isLoading}>
+            {isLoading ? (
+              <>
+                <Spinner size={16} className="mr-2" />
+                Creando...
+              </>
+            ) : (
+              "Crear Proyecto"
+            )}
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   )
