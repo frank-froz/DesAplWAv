@@ -3,19 +3,10 @@ import { prisma } from '@/lib/prisma'
 
 export async function GET(
     request: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        // Await params para evitar errores de Next.js con parámetros dinámicos
-        const resolvedParams = (await params) as { id?: string };
-        const authorId = resolvedParams.id;
-        
-        if (!authorId) {
-            return NextResponse.json(
-                { error: 'Missing author id in params' },
-                { status: 400 }
-            );
-        }
+        const { id: authorId } = await params;
 
         // Verificar que el autor existe
         const author = await prisma.author.findUnique({
