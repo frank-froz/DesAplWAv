@@ -3,15 +3,11 @@ import { prisma } from '@/lib/prisma'
 
 export async function GET(
     request: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        // `params` may be a Promise in some Next.js runtimes — await it before accessing
-        const resolvedParams = (await params) as { id?: string };
-        const userId = resolvedParams.id;
-        if (!userId) {
-            return NextResponse.json({ error: 'Missing author id in params' }, { status: 400 });
-        }
+        const { id: userId } = await params;
+        
         const author = await prisma.author.findUnique({
             where: { id: userId },
             include: {
@@ -45,9 +41,10 @@ export async function GET(
 
 export async function PUT(
     request: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id: userId } = await params;
         const body = await request.json()
         const { name, email, bio, nationality, birthYear } = body;
 
@@ -61,11 +58,6 @@ export async function PUT(
             }
         }
 
-        const resolvedParams = (await params) as { id?: string };
-        const userId = resolvedParams.id;
-        if (!userId) {
-            return NextResponse.json({ error: 'Missing author id in params' }, { status: 400 });
-        }
         const author = await prisma.author.update({
             where: { id: userId },
             data: {
@@ -104,14 +96,11 @@ export async function PUT(
 
 export async function DELETE(
     request: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const resolvedParams = (await params) as { id?: string };
-        const userId = resolvedParams.id;
-        if (!userId) {
-            return NextResponse.json({ error: 'Missing author id in params' }, { status: 400 });
-        }
+        const { id: userId } = await params;
+        
         await prisma.author.delete({
             where: { id: userId }
         })

@@ -3,11 +3,11 @@ import { prisma } from "@/lib/prisma"
 
 export async function GET(
     request: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const resolvedParams = (await params) as { id?: string };
-        const authorId = resolvedParams.id;
+        const { id: authorId } = await params;
+        
         if (!authorId) {
             return NextResponse.json({ error: 'Missing author id in params' }, { status: 400 });
         }

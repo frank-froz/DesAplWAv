@@ -3,11 +3,11 @@ import { prisma } from '@/lib/prisma'
 
 export async function GET(
     request: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const resolvedParams = (await params) as { id?: string };
-        const bookId = resolvedParams.id;
+        const { id: bookId } = await params;
+        
         if (!bookId) {
             return NextResponse.json({ error: 'Missing book id in params' }, { status: 400 });
         }
@@ -38,10 +38,11 @@ export async function GET(
 
 export async function PUT(
     request: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const body = await request.json()
+        const { id: bookId } = await params;
+        const body = await request.json();
         const {
             title,
             description,
@@ -74,12 +75,6 @@ export async function PUT(
                     { error: 'Author not found' },
                     { status: 404 })
             }
-        }
-
-        const resolvedParams = (await params) as { id?: string };
-        const bookId = resolvedParams.id;
-        if (!bookId) {
-            return NextResponse.json({ error: 'Missing book id in params' }, { status: 400 });
         }
 
         const book = await prisma.book.update({
@@ -124,14 +119,10 @@ export async function PUT(
 
 export async function DELETE(
     request: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const resolvedParams = (await params) as { id?: string };
-        const bookId = resolvedParams.id;
-        if (!bookId) {
-            return NextResponse.json({ error: 'Missing book id in params' }, { status: 400 });
-        }
+        const { id: bookId } = await params;
 
         await prisma.book.delete({
             where: { id: bookId },
