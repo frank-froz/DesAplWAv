@@ -56,6 +56,10 @@ export const authOptions: AuthOptions = {
             }
         })
     ],
+    pages: {
+        signIn: '/signIn',
+        error: '/signIn',
+    },
     callbacks: {
         async jwt({ token, user }) {
             // Agregar rol al token JWT
