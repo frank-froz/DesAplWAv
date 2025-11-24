@@ -37,6 +37,6 @@ export const personalInfo = {
   email: 'fahuaytalla@gmail.com',
   github: 'https://github.com/frank-froz',
   linkedin: 'https://www.linkedin.com/in/franklin-huaytalla-rodriguez/',
-  siteUrl: 'https://tuportafolio.com',
+  siteUrl: 'https://fhuaytalla.duckdns.org/',
   avatar: '/profile.jpg',
 };
