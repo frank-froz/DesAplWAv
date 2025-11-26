@@ -105,7 +105,7 @@ export default function HomePage() {
                             href={`/products/${product.id}`}
                             className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
                         >
-                            {product.imageUrl && (
+                            {product.imageUrl && product.imageUrl.trim() !== '' && (
                                 <img
                                     src={product.imageUrl}
                                     alt={product.nombre}

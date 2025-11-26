@@ -40,7 +40,7 @@ export default async function ProductDetailPage({
             </Link>  
 
             <div className="bg-white border border-gray-200 rounded-lg p-8">  
-                {product.imageUrl && (
+                {product.imageUrl && product.imageUrl.trim() !== '' && (
                     <img
                         src={product.imageUrl}
                         alt={product.nombre}
